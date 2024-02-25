@@ -1,5 +1,5 @@
 import torch
-
+from tqdm.auto import tqdm
 import numpy as np
 
 def accuracy(model, data):
@@ -9,7 +9,7 @@ def accuracy(model, data):
     accuracies = []
     accuracies_top_5 = []
 
-    for val_batch, (x, y) in enumerate(loader):
+    for val_batch, (x, y) in enumerate(tqdm(loader)):
 
         with torch.no_grad():
             x = x.cuda()
@@ -18,7 +18,7 @@ def accuracy(model, data):
 
             accuracy = val_losses['acc_val'].item()
             accuracies.append(accuracy)
-            
+
             z_fc, z_conv = model.model(x)
             model.calc_mu_conv()
             
@@ -47,7 +47,7 @@ def accuracy_10_crop(model, data, ff = False):
     accuracies = []
     accuracies_top_5 = []
 
-    for val_batch, (x, y) in enumerate(data.val_loader_10_crop):
+    for val_batch, (x, y) in enumerate(tqdm(data.val_loader_10_crop)):
 
         with torch.no_grad():
             x = x.cuda()

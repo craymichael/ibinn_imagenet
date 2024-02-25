@@ -52,7 +52,7 @@ class FeedForwardImagenetClassifier(nn.Module):
             losses['acc_tr'] = torch.mean((torch.argmax(y, dim=1) == torch.argmax(z, dim=1)).float())
 
         for lname in ['nll_joint_tr', 'nll_class_tr', 'cat_ce_tr', 'acc_tr']:
-            losses[lname] = torch.mean(losses[lname])
+            losses[lname] = torch.mean(torch.tensor(losses[lname]))
 
         return losses
 

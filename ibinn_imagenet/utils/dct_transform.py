@@ -18,6 +18,9 @@ def dct_1d(x):
     v = torch.cat([x[:, ::2], x[:, 1::2].flip([1])], dim=1)
 
     Vc = torch.rfft(v, 1, onesided=False)
+    # Vc = torch.view_as_real(torch.fft.rfft2(v))
+    # Vc = torch.fft.rfft(v)
+    # Vc = torch.fft.rfft(v, 1)
 
     k = - torch.arange(N, dtype=x.dtype, device=x.device)[None, :] * np.pi / (2 * N)
     W_r = torch.cos(k)
@@ -55,6 +58,9 @@ def idct_1d(X):
     V = torch.cat([V_r.unsqueeze(2), V_i.unsqueeze(2)], dim=2)
 
     v = torch.irfft(V, 1, onesided=False)
+    # v = torch.view_as_real(torch.fft.rfft2(V))
+    # v = torch.fft.irfft(V)
+    # v = torch.fft.irfft(V, 1)
     x = v.new_zeros(v.shape)
     x[:, ::2] += v[:, :N - (N // 2)]
     x[:, 1::2] += v.flip([1])[:, :N // 2]

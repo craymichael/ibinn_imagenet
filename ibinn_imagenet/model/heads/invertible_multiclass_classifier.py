@@ -84,6 +84,7 @@ class InvertibleMulticlassClassifier(InvertibleArchitecture):
         nodes.append(dctpooling)
 
         split_node = Ff.Node(dctpooling.out0, Fm.Split1D, {'split_size_or_sections': (self.n_loss_dims_1d, self.n_total_dims_1d - self.n_loss_dims_1d), 'dim': 0}, name='exit_flow split')
+        # split_node = Ff.Node(dctpooling.out0, Fm.Split1D, {'section_sizes': (self.n_loss_dims_1d, self.n_total_dims_1d - self.n_loss_dims_1d), 'dim': 0}, name='exit_flow split')
         split_nodes.append(split_node)
 
         output_node = Ff.OutputNode(split_node.out1, name="out_conv")

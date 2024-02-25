@@ -229,6 +229,7 @@ class InvertibleResNet(InvertibleArchitecture):
                 self.channels = n_downstream_channels
 
                 split = Ff.Node(middle_flow, Fm.Split1D, {'dim': 0, 'split_size_or_sections': (n_downstream_channels, n_skip_channels)}, name=f'middle_flow split %s_%s ' % (self.block, (1+i)))
+                # split = Ff.Node(middle_flow, Fm.Split1D, {'dim': 0, 'section_sizes': (n_downstream_channels, n_skip_channels)}, name=f'middle_flow split %s_%s ' % (self.block, (1+i)))
                 split_nodes.append(split)
 
                 bottleneck = self._bottleneck_residual_block(planes, 1, self.groups, self.base_width, dilation)
